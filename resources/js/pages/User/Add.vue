@@ -74,7 +74,7 @@ onMounted(() => getAllRoles())
 
     <div class="bg-white min-h-screen shadow-lg rounded-lg mt-4 p-4">
       <div class="flex items-center justify-between">
-        <p class="font-bold">Add User</p>
+        <p class="font-bold">Create User</p>
         <RouterLink to="/users"
                     class="px-2 py-1 rounded-md bg-primary-700 text-white flex items-center gap-2 hover:shadow-lg transition-all ease-in-out duration-300">
           <Icon name="solar:arrow-left-line-duotone"/>

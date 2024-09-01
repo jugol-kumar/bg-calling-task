@@ -105,12 +105,12 @@ const saveNewRole = async () => {
 
     <Breadcrumbs
         :item="{name:'Roles', path:'/roles', icon:'solar:shield-user-bold-duotone'}"
-        :links="[{name:'Index', path:'/roles'}, {name:'Add Role', path:'/add-role'}]"
+        :links="[{name:'Index', path:'/roles'}, {name:'Update Role', path:'/add-role'}]"
     />
 
     <div class="bg-white min-h-screen shadow-lg rounded-lg mt-4 p-4">
       <div class="flex items-center justify-between">
-        <p class="font-bold">Roles</p>
+        <p class="font-bold">Update Role</p>
         <RouterLink to="/roles"
                     class="px-2 py-1 rounded-md bg-primary-700 text-white flex items-center gap-2 hover:shadow-lg transition-all ease-in-out duration-300">
           <Icon name="solar:arrow-left-line-duotone"/>

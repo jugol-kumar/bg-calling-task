@@ -78,7 +78,7 @@ onMounted(async () => {
 
     <div class="bg-white min-h-screen shadow-lg rounded-lg mt-4 p-4">
       <div class="flex items-center justify-between">
-        <p class="font-bold">Edit User</p>
+        <p class="font-bold">Update User</p>
         <RouterLink to="/users"
                     class="px-2 py-1 rounded-md bg-primary-700 text-white flex items-center gap-2 hover:shadow-lg transition-all ease-in-out duration-300">
           <Icon name="solar:arrow-left-line-duotone"/>
@@ -162,7 +162,7 @@ onMounted(async () => {
               {{ error?.response?.data?.errors?.role[0] }}
             </small>
           </div>
-          <LoadingButton :isLoading="loadUpdate">Save User</LoadingButton>
+          <LoadingButton :isLoading="loadUpdate">Update User</LoadingButton>
         </form>
       </TransitionGroup>
 

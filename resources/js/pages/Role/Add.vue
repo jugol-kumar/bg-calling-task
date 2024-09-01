@@ -103,60 +103,6 @@ const saveNewRole = async () => {
 
 }
 
-/*
-
-const onSubmit = () => editRoleRef.value ? updateThisRole(editRoleRef.value?.edited.id) : createNewRole();
-
-const createNewRole = () =>{
-  createRole.post(props.create_url, {
-    onSuccess: (res) =>{
-      createRole.reset()
-      Swal.fire(
-          'Saved!',
-          'Role has been Created....',
-          'success'
-      )
-      document.getElementById('addRoleModal').$vb.modal.hide()
-      document.querySelector(".modal-backdrop ").classList.remove("show");
-    },
-    onError: (err) =>{
-      console.log(err)
-    }
-  });
-}
-
-let editRole = (id) =>{
-  axios.get(`authorizations/${id}/edit`).then((res)=>{
-    createRole.reset();
-    editRoleRef.value = res.data;
-    createRole.roleName = res.data.edited.name;
-    res.data.edited.permissions.map(item => createRole.selectedPermissions.push(item.name))
-    document.getElementById('addRoleModal').$vb.modal.show()
-    console.log(res)
-  }).catch((err)=>{
-    console.log(err)
-  })
-}
-const updateThisRole = (id) =>{
-  createRole.put(`authorizations/${id}`, {
-    onSuccess: (res) =>{
-      createRole.reset()
-      Swal.fire(
-          'Saved!',
-          'Role has been Created....',
-          'success'
-      )
-      document.getElementById('addRoleModal').$vb.modal.hide()
-      document.querySelector(".modal-backdrop ").classList.remove("show");
-    },
-    onError: (err) =>{
-      console.log(err)
-    }
-  });
-}
-*/
-
-
 </script>
 
 
@@ -170,7 +116,7 @@ const updateThisRole = (id) =>{
 
     <div class="bg-white min-h-screen shadow-lg rounded-lg mt-4 p-4">
       <div class="flex items-center justify-between">
-        <p class="font-bold">Add Role</p>
+        <p class="font-bold">Create Role</p>
         <RouterLink to="/roles"
                     class="px-2 py-1 rounded-md bg-primary-700 text-white flex items-center gap-2 hover:shadow-lg transition-all ease-in-out duration-300">
           <Icon name="solar:arrow-left-line-duotone"/>
