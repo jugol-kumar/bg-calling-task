@@ -1,0 +1,32 @@
+name: Publish Website to CPanel
+on:
+  push:
+    branches:
+      - master
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+        with:
+          fetch-depth: 2
+      - name: Build assets
+        run: npm install && npm run build --debug
+
+      - name: Install PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: 'composer'
+
+      - name: Install PHP dependencies
+        run: composer update --no-dev --optimize-autoloader
+
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.SERVER_ADDRESS  }}
+          username: ${{ secrets.SERVER_USERNAME  }}
+          password: ${{ secrets.SERVER_PASSWORD  }}
+          protocol: ftp
