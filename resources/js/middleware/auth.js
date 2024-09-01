@@ -10,6 +10,8 @@ export default (to, from, next) => {
     const loginRoute = 'Login'
     const isLoginRoute = to.name === loginRoute
 
+    if(to.name === 'Home') next();
+
     if (to.meta.can) {
         const hasPermission = to.meta.can.some(permission => auth.user.can.includes(permission));
         if (supperAdmin.value !== auth.user.roles[0]?.name || !hasPermission) {

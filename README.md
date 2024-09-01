@@ -33,3 +33,7 @@ npm run dev
 ```
 
 - add frontend url in laravel .env file as FRONTEND_URL
+
+
+In this project, I will complete the Role and Permission Management System, including user management and role-based authorization. I will utilize the latest versions of Laravel and Vue.js, along with REST APIs, Laravel requests, resources, collections, and more. To manage roles and permissions, I will use the Spatie Laravel Permission package.
+

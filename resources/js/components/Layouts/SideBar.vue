@@ -59,7 +59,7 @@ const menus = ref([
 <template>
   <div class="relative">
     <div class="bg-primary-800 py-5 mb-10">
-      <p class="text-white text-center uppercase tracking-widest">CTP</p>
+      <p class="text-white text-center uppercase tracking-widest font-bold">BD Calling</p>
     </div>
     <ul class="flex flex-col">
       <template v-for="item in menus">
