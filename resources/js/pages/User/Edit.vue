@@ -6,9 +6,12 @@ import Input from "../../components/Input.vue";
 import {useToast} from "vue-toastification";
 import {onMounted, ref} from "vue";
 import useAxios from "../../composables/useAxios.js";
+import {useRoute} from "vue-router";
 
 const {sendRequest, loading, error} = useAxios();
 const toast = useToast();
+const route = useRoute();
+const loadUpdate = ref(false)
 const user = ref({
   name: null,
   email: null,
@@ -17,22 +20,7 @@ const user = ref({
   role: null,
   image: null,
 })
-const roles = ref([
-  {
-    id: 1, name: 'Gulshan 1, Dhaka'
-  },
-
-  {
-    id: 2, name: 'Gulshan 2, Dhaka'
-  },
-  {
-    id: 3, name: 'Savar, Dhaka'
-  },
-
-  {
-    id: 4, name: 'Badda, Dhaka'
-  }
-])
+const roles = ref([])
 const previewImage = ref(null)
 const coverImage = (image) => {
   const file = image.target.files[0];
@@ -42,10 +30,10 @@ const coverImage = (image) => {
 
 const saveUser = async () => {
   const res = await sendRequest({
-    url: '/v1/user',
+    url: `/v1/user/${route.params.id}`,
     method: 'POST',
-    data: user.value
-  })
+    data: {...user.value, _method:'PUT'}
+  }, loadUpdate)
   user.value = {}
   previewImage.value = null;
   toast.success(res.data)
@@ -58,7 +46,23 @@ const getAllRoles = async () => {
   })
   roles.value = res.data
 }
-onMounted(() => getAllRoles())
+
+const getUser = async () => {
+  const res = await sendRequest({
+    url: `/v1/user/${route.params.id}`,
+    method: 'GET'
+  })
+
+
+  user.value = res.data
+  previewImage.value = res.data?.avatar
+  user.value.role = res.data?.roles[0]?.id
+}
+
+onMounted(async () => {
+  await getUser()
+  await getAllRoles()
+})
 
 
 </script>
@@ -69,12 +73,12 @@ onMounted(() => getAllRoles())
 
     <Breadcrumbs
         :item="{name:'Users', path:'/users', icon:'solar:users-group-rounded-bold-duotone'}"
-        :links="[{name:'Index', path:'/users'}, {name:'Add User', path:'/add-user'}]"
+        :links="[{name:'Index', path:'/users'}, {name:'Edit User', path:'/edit-user/'+$route.params.id}]"
     />
 
     <div class="bg-white min-h-screen shadow-lg rounded-lg mt-4 p-4">
       <div class="flex items-center justify-between">
-        <p class="font-bold">Add User</p>
+        <p class="font-bold">Edit User</p>
         <RouterLink to="/users"
                     class="px-2 py-1 rounded-md bg-primary-700 text-white flex items-center gap-2 hover:shadow-lg transition-all ease-in-out duration-300">
           <Icon name="solar:arrow-left-line-duotone"/>
@@ -89,7 +93,7 @@ onMounted(() => getAllRoles())
               labelName="Name"
               v-model="user.name"
               :error="error?.response?.data?.errors?.name"
-              :loading="loading"
+              :loading="loadUpdate"
               type="text"
               required
               placeholder="e.g  john doh"
@@ -101,7 +105,7 @@ onMounted(() => getAllRoles())
                 labelName="Email"
                 v-model="user.email"
                 :error="error?.response?.data?.errors?.email"
-                :loading="loading"
+                :loading="loadUpdate"
                 type="email"
                 required
                 placeholder="e.g  example@test.com"
@@ -113,7 +117,7 @@ onMounted(() => getAllRoles())
                 labelName="Password"
                 v-model="user.password"
                 :error="error?.response?.data?.errors?.password"
-                :loading="loading"
+                :loading="loadUpdate"
                 type="password"
                 required
                 placeholder="Enter your Password"
@@ -146,7 +150,7 @@ onMounted(() => getAllRoles())
             <label class="text-sm block mb-2">Role <span class="text-red-500 ms-2">*</span></label>
             <Select
                 class="disabled:bg-gray-200"
-                :disabled="loading"
+                :disabled="loadUpdate"
                 label="name"
                 :options="roles"
                 :reduce="item => item.id"
@@ -158,7 +162,7 @@ onMounted(() => getAllRoles())
               {{ error?.response?.data?.errors?.role[0] }}
             </small>
           </div>
-          <LoadingButton :isLoading="loading">Save User</LoadingButton>
+          <LoadingButton :isLoading="loadUpdate">Save User</LoadingButton>
         </form>
       </TransitionGroup>
 

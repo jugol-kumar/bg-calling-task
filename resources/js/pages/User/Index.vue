@@ -84,13 +84,11 @@ onMounted(() => getALlUsers())
 
               <td class="px-6 py-4">
                 <div class="flex gap-2">
+
+                  <RouterLink :to="{name:'EditUser', params:{id:item.id}}" class="p-1 rounded-md flex items-center justify-center bg-primary-100 text-primary-800 hover:bg-primary-300 transition-all ease-in-out">
+                    <Icon name="solar:pen-line-duotone"/>
+                  </RouterLink>
                   <DeleteButton  :path="`/v1/user/${item.id}`" @deleted="getALlUsers()"/>
-                  <button  class="p-1 rounded-md flex items-center justify-center bg-primary-100 text-primary-900 hover:bg-primary-300 transition-all ease-in-out">
-                    <Icon name="solar:pen-new-square-bold-duotone"/>
-                  </button>
-                  <button  class="p-1 rounded-md flex items-center justify-center bg-primary-100 text-primary-900 hover:bg-primary-300 transition-all ease-in-out">
-                    <Icon name="solar:alt-arrow-right-broken"/>
-                  </button>
                 </div>
               </td>
             </tr>

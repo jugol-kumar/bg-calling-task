@@ -14,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static create(mixed $data)
+ * @property mixed $image
  */
 class User extends Authenticatable
 {

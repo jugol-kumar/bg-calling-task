@@ -66,6 +66,14 @@ const router = createRouter({
       component: () => import('@/pages/User/Add.vue')
     },
     {
+      path:'/edit-user/:id',
+      name:'EditUser',
+      meta:{
+        can:['user.create']
+      },
+      component: () => import('@/pages/User/Edit.vue')
+    },
+    {
       path: '/settings',
       name: 'Settings',
       component: () => import('@/pages/Setting/ProfileSetting.vue')

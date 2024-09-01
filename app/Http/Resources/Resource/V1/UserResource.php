@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'avatar' => Storage::url($this->image),
             'createdAt' => $this->created_at?->format('YYYY-MM-DD'),
-            'roles' => $this->roles,
+            'roles' => $this->whenLoaded('roles'),
         ];
     }
 }

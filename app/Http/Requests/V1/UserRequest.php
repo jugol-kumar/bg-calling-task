@@ -4,6 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -22,14 +23,25 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        // apply validation rules for create user
-        return [
-            'name'        => ['required', 'string', 'min:3', 'max:30'],
-            'email'       => ['required','unique:users', 'email:rfc,dns'],
-            'password'    => ['required', 'min:6'],
-            'image'       => ['nullable', 'image', 'mimes:jpg,png,svg,gif', 'max:1024'],
-            'role'        => ['required', 'exists:roles,id']
-        ];
+        if(request()->method() == 'PUT'){
+            // apply validation rules for update user
+            return [
+                'name'        => ['sometimes', 'string', 'min:3', 'max:30'],
+                'email'       => ['sometimes', 'email:rfc,dns', Rule::unique('users')->ignore($this->user->id)],
+                'password'    => ['sometimes', 'min:6'],
+                'image'       => ['nullable', 'image', 'mimes:jpg,png,svg,gif', 'max:1024'],
+                'role'        => ['sometimes', 'exists:roles,id']
+            ];
+        }else{
+            // apply validation rules for create user
+            return [
+                'name'        => ['required', 'string', 'min:3', 'max:30'],
+                'email'       => ['required','unique:users', 'email:rfc,dns'],
+                'password'    => ['required', 'min:6'],
+                'image'       => ['nullable', 'image', 'mimes:jpg,png,svg,gif', 'max:1024'],
+                'role'        => ['required', 'exists:roles,id']
+            ];
+        }
     }
     protected function prepareForValidation(): void
     {

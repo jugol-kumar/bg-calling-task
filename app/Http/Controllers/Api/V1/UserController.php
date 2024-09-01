@@ -15,7 +15,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         // get all users with roles
         $users = User::query()
@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $userRequest)
+    public function store(UserRequest $userRequest): \Illuminate\Http\JsonResponse
     {
         $data = $userRequest->validated();
         // upload user image in storage
@@ -43,23 +43,33 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): UserResource
     {
-        //
+        return UserResource::make($user->load('roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $userRequest, User $user): \Illuminate\Http\JsonResponse
     {
-        //
+        $data = $userRequest->validated();
+        // if has new image then delete image and upload new image
+        if($userRequest->hasFile('image')){
+            if($user->image && Storage::exists($user->image)) Storage::delete($user->image);
+            $data['image'] = $userRequest->file('image')->store('/upload');
+        }
+
+        $user->update($data);
+        $role = Role::query()->findOrFail($userRequest['role']);
+        if($role) $user->syncRoles($role->name); // if user create and get the role then assign role to user
+        return response()->json('User Updated Successfully Done...');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
         if($user->image && Storage::exists($user->image)) Storage::delete($user->image);
         $user->delete();
