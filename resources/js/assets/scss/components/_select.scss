@@ -1,0 +1,61 @@
+
+.vs__dropdown-toggle {
+    @apply border border-primary-500;
+    padding: 6px 8px !important;
+    padding-right: 0px !important;
+    border-radius: 8px !important;
+
+}
+.vs__dropdown-menu {
+    top: 40px !important;
+    border: 0 !important;
+    padding: 0;
+}
+.vs__search {
+    margin: 0 !important;
+    @apply text-primary-500;
+}
+.vs--disabled .vs__dropdown-toggle{
+ @apply disabled:bg-gray-200
+}
+.vs--multiple {
+    .vs__selected {
+        @apply border-primary-500 text-white;
+        button {
+            svg {
+                @apply fill-white;
+            }
+        }
+    }
+}
+.vs__selected {
+    margin: 0 !important;
+}
+.vs__selected-options {
+    gap: 5px;
+    input {
+        @apply text-sm;
+        &::placeholder {
+            @apply text-sm;
+        }
+    }
+}
+.vs__open-indicator {
+    display: none !important;
+}
+.vs__actions {
+    padding: 0 !important;
+}
+.vs__dropdown-option--highlight {
+    @apply border-primary-500;
+}
+.vs__selected {
+    @apply text-primary-500;
+}
+.vs__clear {
+    svg {
+        @apply fill-primary-500;
+    }
+}
+
+

@@ -1,0 +1,45 @@
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/*fade transition*/
+
+.fade-enter-active {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-in-out;
+}
+
+.fade-leave-active {
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in-out;
+}
+
+.fade-enter-from {
+    transform: translateY(-20px) translateX(-20px);
+    opacity: 0;
+}
+
+.fade-enter-to {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+}
+
+.fade-leave-to {
+    transform: translateY(20px) translateX(20px);
+    opacity: 0;
+}
+
+/*opacity*/
+.opacity-enter-active,
+.opacity-leave-active {
+    transition: 0.2s all ease-in-out;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+    opacity: 0;
+}
